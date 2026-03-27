@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* ===== BASE (BLACK LUXURY) ===== */
+  --color-brand-bg: #0E0E0E;
+  --color-brand-bg-alt: #121212;
+  --color-brand-surface: #1A1A1A;
+
+  /* ===== TEXT ===== */
+  --color-brand-text: #F5F5F5;
+  --color-brand-text-soft: #CFCFCF;
+  --color-brand-text-muted: #8A8A8A;
+
+  /* ===== ACCENT (GOLD) ===== */
+  --color-brand-accent: #C6A46C;
+  --color-brand-accent-hover: #B8955F;
+
+  /* ===== EARTH SUPPORT ===== */
+  --color-brand-stone: #E8E1D9;   /* light sections */
+  --color-brand-leather: #A67C52; /* subtle accents */
+  --color-brand-green: #2F3E36;   /* minimal use */
+
+  /* ===== FONTS ===== */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --background: var(--color-brand-bg);
+  --foreground: var(--color-brand-text);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-serif), serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-bg-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-accent-hover);
+}
