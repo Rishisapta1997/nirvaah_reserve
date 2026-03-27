@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // SLING BAG, TOTE BAG, BACKPACK
+  price       String   // ₹1,499
+  oldPrice    String?  // ₹2,199
+  image       String
+  features    String   // JSON string of features
+  isCombo     Boolean  @default(false)
+  category    String   @default("INDIVIDUAL") // INDIVIDUAL, COMBO
+  status      String   @default("ACTIVE")    // ACTIVE, INACTIVE, ARCHIVED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  preOrders   PreOrder[]
+}
+
+model PreOrder {
+  id               String   @id @default(cuid())
+  productId        String
+  product          Product  @relation(fields: [productId], references: [id])
+  productName      String
+  fullName         String
+  email            String
+  phone            String
+  address          String
+  city             String
+  pincode          String
+  tokenAmount      Float    @default(199.0)
+  tokenPaid        Boolean  @default(false)
+  paymentReference String?
+  status           String   @default("PENDING") // PENDING, PROCESSING, DISPATCHED, DELIVERED, CANCELLED
+  trackingId       String?
+  shippingPartner  String?
+  metadata         String?  // JSON string for age group, gender etc if collected
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AnalyticsEvent {
+  id          String   @id @default(cuid())
+  eventType   String   // PAGE_VIEW, CLICK, INTENT_BOOK, ABANDON, CONVERSION
+  path        String
+  componentId String?  // ID of the button/section clicked
+  sessionId   String?  // To track user journey
+  deviceInfo  String?  // Browser, OS etc
+  metadata    String?  // JSON string for extra info
+  createdAt   DateTime @default(now())
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Hashed password
+  name      String
+  role      String   @default("ADMIN") // ADMIN, EDITOR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
