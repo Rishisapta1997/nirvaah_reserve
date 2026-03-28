@@ -49,6 +49,20 @@ export default function Collection() {
     }
   };
 
+  // ✅ SAME AS HERO (FINAL FIX)
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const href = e.currentTarget.getAttribute("href");
+    if (!href) return;
+
+    const targetId = href.replace("#", "");
+    const elem = document.getElementById(targetId);
+
+    if (elem) {
+      e.preventDefault();
+      elem.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const ProductCard = (product: Product, index: number) => {
     const features = parseFeatures(product.features);
 
@@ -60,7 +74,6 @@ export default function Collection() {
         transition={{ delay: index * 0.1 }}
       >
         <div className="group bg-[#1a1a1a] rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#c28e44]/30 transition-all duration-300 shadow-lg hover:scale-[1.02]">
-
           <div className="relative overflow-hidden aspect-[1/1] bg-[#0d0d0d]">
             <img
               src={product.image}
@@ -100,9 +113,16 @@ export default function Collection() {
               ))}
             </ul>
 
-            <button className="w-full bg-[#c28e44] py-2.5 sm:py-3 rounded-full text-white font-bold cursor-pointer text-sm sm:text-base">
-              Reserve {product.type.charAt(0).toUpperCase() + product.type.slice(1).toLowerCase()} - ₹{product.booking_price ?? 199}
-            </button>
+            <a
+              href="#reserve"
+              onClick={handleScroll}
+              className="w-full block bg-[#c28e44] py-2.5 sm:py-3 rounded-full text-white font-bold text-center cursor-pointer text-sm sm:text-base hover:bg-[#b8863a] transition-colors duration-200"
+            >
+              Reserve{" "}
+              {product.type.charAt(0).toUpperCase() +
+                product.type.slice(1).toLowerCase()}{" "}
+              - ₹{product.booking_price ?? 199}
+            </a>
           </div>
         </div>
       </motion.div>
@@ -120,7 +140,6 @@ export default function Collection() {
         transition={{ delay: index * 0.1 }}
       >
         <div className="group flex flex-col sm:flex-row bg-[#1a1a1a] rounded-2xl sm:rounded-[2rem] overflow-hidden border border-white/5 hover:border-[#c28e44]/30 transition-all duration-300 shadow-lg hover:scale-[1.02]">
-
           <div className="sm:w-1/2 h-[200px] sm:h-[260px] bg-[#0d0d0d] overflow-hidden">
             <img
               src={product.image}
@@ -158,9 +177,13 @@ export default function Collection() {
               ))}
             </ul>
 
-            <button className="bg-[#c28e44] py-2.5 sm:py-3 rounded-full text-white font-bold cursor-pointer text-sm sm:text-base">
+            <a
+              href="#reserve"
+              onClick={handleScroll}
+              className="bg-[#c28e44] py-2.5 sm:py-3 rounded-full text-white font-bold text-center cursor-pointer text-sm sm:text-base hover:bg-[#b8863a] transition-colors duration-200 w-full"
+            >
               Reserve {product.name} @ ₹{product.booking_price ?? 299}
-            </button>
+            </a>
           </div>
         </div>
       </motion.div>
@@ -170,7 +193,6 @@ export default function Collection() {
   return (
     <section id="collection" className="py-16 sm:py-24 px-4 sm:px-6 md:px-16 bg-brand-bg">
       <div className="max-w-6xl mx-auto">
-
         <div className="text-center mb-12 sm:mb-20">
           <motion.p
             initial={{ opacity: 0, y: yOffset }}
@@ -198,7 +220,6 @@ export default function Collection() {
 
         {!loading && combos.length > 0 && (
           <div id="combos" className="pt-12 sm:pt-20 border-t border-white/10">
-
             <motion.p
               initial={{ opacity: 0, y: yOffset }}
               whileInView={{ opacity: 1, y: 0 }}
