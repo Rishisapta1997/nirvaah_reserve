@@ -282,7 +282,7 @@ export default function Reserve() {
                           value={p.id}
                           className="bg-[#2a2a2a] text-white py-2"
                         >
-                          {p.name} — {p.type} — {p.price}
+                          {p.name} — {p.type} — ₹{p.booking_price}
                         </option>
                       ))}
                     </select>
