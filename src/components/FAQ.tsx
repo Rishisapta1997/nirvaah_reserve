@@ -18,19 +18,19 @@ export default function FAQ() {
   const yOffset = direction === "down" ? 20 : -20;
 
   return (
-    <section id="faq" className="py-16 sm:py-24 px-4 sm:px-6 md:px-16 bg-brand-bg border-t border-white/5">
+    <section id="faq" className="py-24 px-6 md:px-16 bg-brand-bg border-t border-white/5">
       <div className="max-w-3xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: yOffset }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
-          className="text-center mb-10 sm:mb-12"
+          className="text-center mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif font-bold text-brand-text mb-3 sm:mb-4">Questions?</h2>
-          <p className="text-[#a87f54] italic font-serif text-sm sm:text-base">Everything you need to know about Nirvaah.</p>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-brand-text mb-4">Questions?</h2>
+          <p className="text-[#a87f54] italic font-serif">Everything you need to know about Nirvaah.</p>
         </motion.div>
 
-        <div className="space-y-3 sm:space-y-4">
+        <div className="space-y-4">
           {faqs.map((faq, idx) => (
             <motion.div 
               key={idx} 
@@ -42,10 +42,10 @@ export default function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full text-left p-4 sm:p-6 font-semibold text-brand-text flex justify-between items-center bg-[#1a1a1a] hover:bg-[#222] transition-colors text-sm sm:text-base"
+                className="w-full text-left p-6 font-semibold text-brand-text flex justify-between items-center bg-[#1a1a1a] hover:bg-[#222] transition-colors"
               >
-                <span className="flex-1 pr-2">{faq.q}</span>
-                <span className="text-[#a87f54] transform transition-transform duration-300 shrink-0" style={{ transform: openIndex === idx ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                {faq.q}
+                <span className="text-[#a87f54] transform transition-transform duration-300" style={{ transform: openIndex === idx ? 'rotate(180deg)' : 'rotate(0deg)' }}>
                   ⌄
                 </span>
               </button>
@@ -55,7 +55,7 @@ export default function FAQ() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="px-4 sm:px-6 pb-4 sm:pb-6 text-white/70 text-xs sm:text-sm leading-relaxed"
+                    className="px-6 pb-6 text-white/70 text-sm leading-relaxed"
                   >
                     {faq.a}
                   </motion.div>

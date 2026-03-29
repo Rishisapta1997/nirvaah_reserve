@@ -17,7 +17,7 @@ interface Office {
 }
 
 const inputCls =
-  "w-full bg-[#1A1A1A] border border-white/8 rounded-xl px-3 sm:px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#C6A46C]/50 transition-colors duration-200 ";
+  "w-full bg-[#1A1A1A] border border-white/8 rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#C6A46C]/50 transition-colors duration-200 ";
 
 export default function ContactSection() {
   const [offices, setOffices] = useState<Office[]>([]);
@@ -90,56 +90,59 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-16 sm:py-24 px-4 sm:px-6 md:px-16 bg-[#0E0E0E] border-t border-white/5"
+      className="py-24 px-6 md:px-16 bg-[#0E0E0E] border-t border-white/5"
     >
       <div className="max-w-6xl mx-auto">
 
-        <div className="text-center mb-12 sm:mb-16">
+        {/* Header */}
+        <div className="text-center mb-16">
           <motion.p
             initial={{ opacity: 0, y: yOffset }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-[10px] uppercase tracking-[0.3em] text-[#C6A46C] mb-3 sm:mb-4"
+            className="text-[10px] uppercase tracking-[0.3em] text-[#C6A46C] mb-4"
           >
             GET IN TOUCH
           </motion.p>
 
           <RevealText
             text="We'd Love to Hear From You."
-            className="text-2xl sm:text-3xl md:text-5xl font-serif text-brand-text mb-4 sm:mb-6 justify-center"
+            className="text-4xl md:text-5xl font-serif text-brand-text mb-6 justify-center"
           />
 
           <motion.p
             initial={{ opacity: 0, y: yOffset }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xs sm:text-sm text-white/40 max-w-md mx-auto px-4"
+            className="text-sm text-white/40 max-w-md mx-auto"
           >
             Questions, feedback, or just want to say hello.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
+        <div className="grid md:grid-cols-2 gap-10 items-start">
 
+          {/* FORM */}
           <motion.div
             initial={{ opacity: 0, y: yOffset }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="bg-[#1A1A1A] border border-white/8 rounded-2xl p-5 sm:p-7"
+            className="bg-[#1A1A1A] border border-white/8 rounded-2xl p-7"
           >
-            <h3 className="text-lg sm:text-xl font-serif text-brand-text mb-5 sm:mb-6">
+            <h3 className="text-xl font-serif text-brand-text mb-6">
               Send a Message
             </h3>
 
             {status === "sent" ? (
-              <div className="text-center py-8 sm:py-10">
+              <div className="text-center py-10">
                 <p className="text-white font-semibold">Message Sent</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                {/* NAME + PHONE */}
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[10px] sm:text-xs text-white/40 mb-1.5 block">
+                    <label className="text-xs text-white/40 mb-1.5 block">
                       Name *
                     </label>
                     <input
@@ -152,13 +155,14 @@ export default function ContactSection() {
                     />
                   </div>
 
+                  {/* FIXED PHONE INPUT */}
                   <div>
-                    <label className="text-[10px] sm:text-xs text-white/40 mb-1.5 block">
+                    <label className="text-xs text-white/40 mb-1.5 block">
                       Phone *
                     </label>
 
                     <div className="flex rounded-xl overflow-hidden border border-white/8 bg-[#1A1A1A] focus-within:border-[#C6A46C]/50">
-                      <span className="flex items-center px-2 sm:px-3 text-xs sm:text-sm text-white/60 bg-white/5 border-r border-white/20 rounded-l-xl select-none font-medium">
+                      <span className="flex items-center px-3 text-sm text-white/60 bg-white/5 border-r border-white/20 rounded-l-xl select-none font-medium">
                         +91
                       </span>
 
@@ -167,7 +171,7 @@ export default function ContactSection() {
                         type="tel"
                         value={form.phone}
                         onChange={handlePhoneChange}
-                        className="flex-1 bg-transparent px-2 sm:px-4 py-3 text-xs sm:text-sm text-white focus:outline-none"
+                        className="flex-1 bg-transparent px-4 py-3.5 text-sm text-white focus:outline-none"
                         placeholder="9876543210"
                       />
                     </div>
@@ -180,8 +184,9 @@ export default function ContactSection() {
                   </div>
                 </div>
 
+                {/* EMAIL */}
                 <div>
-                  <label className="text-[10px] sm:text-xs text-white/40 mb-1.5 block">
+                  <label className="text-xs text-white/40 mb-1.5 block">
                     Email *
                   </label>
                   <input
@@ -195,13 +200,14 @@ export default function ContactSection() {
                   />
                 </div>
 
+                {/* SUBJECT */}
                 <div className="relative">
-                  <label className="text-[10px] sm:text-xs text-white/40 mb-1.5 block">
+                  <label className="text-xs text-white/40 mb-1.5 block">
                     Subject
                   </label>
 
                   <select
-                    className="w-full bg-[#1A1A1A] border border-white/8 rounded-xl px-3 sm:px-4 py-3 text-xs sm:text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#C6A46C]/50 transition-colors duration-200 bg-[#2a2a2a] appearance-none"
+                    className="w-full bg-[#1A1A1A] border border-white/8 rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-[#C6A46C]/50 transition-colors duration-200 bg-[#2a2a2a] text-white py-2 appearance-none"
                     value={form.subject}
                     onChange={(e) =>
                       setForm({ ...form, subject: e.target.value })
@@ -215,7 +221,8 @@ export default function ContactSection() {
                     <option>Other</option>
                   </select>
 
-                  <div className="pointer-events-none absolute right-3 sm:right-4 top-[38px] sm:top-[42px]">
+                  {/* FIXED ARROW */}
+                  <div className="pointer-events-none absolute right-4 top-[42px]">
                     <svg width="10" height="7" viewBox="0 0 10 7">
                       <path
                         d="M1 1L5 6L9 1"
@@ -227,8 +234,9 @@ export default function ContactSection() {
                   </div>
                 </div>
 
+                {/* MESSAGE */}
                 <div>
-                  <label className="text-[10px] sm:text-xs text-white/40 mb-1.5 block">
+                  <label className="text-xs text-white/40 mb-1.5 block">
                     Message *
                   </label>
                   <textarea
@@ -244,7 +252,7 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className="w-full mt-3 sm:mt-2 bg-gradient-to-r from-[#b3742b] to-[#cfa15f] hover:from-[#cfa15f] hover:to-[#b3742b] text-white py-3 sm:py-4 rounded-full font-bold shadow-md hover:shadow-lg transition-all disabled:opacity-60 cursor-pointer text-sm sm:text-base"
+                  className="w-full mt-2 bg-gradient-to-r from-[#b3742b] to-[#cfa15f] hover:from-[#cfa15f] hover:to-[#b3742b] text-white py-4 rounded-full font-bold shadow-md hover:shadow-lg transition-all disabled:opacity-60 cursor-pointer"
                 >
                   Send Message
                 </button>
@@ -252,16 +260,18 @@ export default function ContactSection() {
             )}
           </motion.div>
 
-          <div className="space-y-4 sm:space-y-6">
+          {/* RIGHT SIDE unchanged */}
+          <div className="space-y-6">
 
+            {/* Quick contact info */}
             <motion.div
               initial={{ opacity: 0, y: yOffset }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: false }}
-              className="bg-[#1A1A1A] border border-white/8 rounded-2xl p-5 sm:p-7 space-y-4 sm:space-y-5"
+              className="bg-[#1A1A1A] border border-white/8 rounded-2xl p-7 space-y-5"
             >
-              <h3 className="text-lg sm:text-xl font-serif text-brand-text">Reach Us Directly</h3>
+              <h3 className="text-xl font-serif text-brand-text">Reach Us Directly</h3>
 
               {[
                 {
@@ -295,32 +305,33 @@ export default function ContactSection() {
                   href: null,
                 },
               ].map((item) => (
-                <div key={item.label} className="flex items-start gap-3 sm:gap-4">
+                <div key={item.label} className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-xl bg-[#C6A46C]/10 border border-[#C6A46C]/20 flex items-center justify-center flex-shrink-0 text-[#C6A46C]">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-[10px] sm:text-xs text-white/30 mb-0.5">{item.label}</p>
+                    <p className="text-xs text-white/30 mb-0.5">{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} className="text-xs sm:text-sm text-white hover:text-[#C6A46C] transition-colors">
+                      <a href={item.href} className="text-sm text-white hover:text-[#C6A46C] transition-colors">
                         {item.value}
                       </a>
                     ) : (
-                      <p className="text-xs sm:text-sm text-white">{item.value}</p>
+                      <p className="text-sm text-white">{item.value}</p>
                     )}
                   </div>
                 </div>
               ))}
             </motion.div>
 
+            {/* Offices from API */}
             {offices.length > 0 && (
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-4">
                 <motion.h3
                   initial={{ opacity: 0, y: yOffset }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                   viewport={{ once: false }}
-                  className="text-xs sm:text-sm uppercase tracking-widest text-white/30 px-1"
+                  className="text-sm uppercase tracking-widest text-white/30 px-1"
                 >
                   Our Offices
                 </motion.h3>
@@ -332,7 +343,7 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.35 + i * 0.1 }}
                     viewport={{ once: false }}
-                    className="bg-[#1A1A1A] border border-white/8 rounded-2xl p-4 sm:p-5 flex items-start gap-3 sm:gap-4"
+                    className="bg-[#1A1A1A] border border-white/8 rounded-2xl p-5 flex items-start gap-4"
                   >
                     <div className="w-8 h-8 rounded-xl bg-[#C6A46C]/10 border border-[#C6A46C]/20 flex items-center justify-center flex-shrink-0 text-[#C6A46C]">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -341,13 +352,13 @@ export default function ContactSection() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-xs sm:text-sm font-semibold text-brand-text">{o.office_name}</p>
-                      <p className="text-[10px] sm:text-xs text-white/40 mt-1 leading-relaxed">
+                      <p className="text-sm font-semibold text-brand-text">{o.office_name}</p>
+                      <p className="text-xs text-white/40 mt-1 leading-relaxed">
                         {o.address}<br />
                         {o.city}, {o.state}
                       </p>
                       {o.phone && (
-                        <a href={`tel:${o.phone}`} className="text-[10px] sm:text-xs text-[#C6A46C] mt-1.5 block hover:text-white transition-colors">
+                        <a href={`tel:${o.phone}`} className="text-xs text-[#C6A46C] mt-1.5 block hover:text-white transition-colors">
                           {o.phone}
                         </a>
                       )}
