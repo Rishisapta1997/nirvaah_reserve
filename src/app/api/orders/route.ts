@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
     const { rows: orders } = await pool.query(
       `SELECT o.*, p.name as p_name, p.type as p_type, p.image as p_image
-       FROM pre_orders o
+       FROM orders o
        LEFT JOIN products p ON p.id = o.product_id
        ${where}
        ORDER BY o.created_at DESC
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     );
 
     const { rows: countRows } = await pool.query(
-      `SELECT COUNT(*) FROM pre_orders ${where}`,
+      `SELECT COUNT(*) FROM orders ${where}`,
       values
     );
 

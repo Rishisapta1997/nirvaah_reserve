@@ -17,9 +17,9 @@ export async function GET(req: NextRequest) {
       pool.query(`SELECT COUNT(*) FROM analytics_events WHERE event_type='CLICK' AND created_at >= ${since}`),
       pool.query(`SELECT COUNT(*) FROM analytics_events WHERE event_type='INTENT_BOOK' AND created_at >= ${since}`),
       pool.query(`SELECT COUNT(*) FROM analytics_events WHERE event_type='CONVERSION' AND created_at >= ${since}`),
-      pool.query(`SELECT COALESCE(SUM(token_amount), 0) as total FROM pre_orders WHERE token_paid = true`),
-      pool.query(`SELECT COUNT(*) FROM pre_orders WHERE token_paid = true`),
-      pool.query(`SELECT COUNT(*) FROM pre_orders`),
+      pool.query(`SELECT COALESCE(SUM(token_amount), 0) as total FROM orders WHERE token_paid = true`),
+      pool.query(`SELECT COUNT(*) FROM orders WHERE token_paid = true`),
+      pool.query(`SELECT COUNT(*) FROM orders`),
       pool.query(`
         SELECT component_id, COUNT(*) as count
         FROM analytics_events
@@ -28,10 +28,10 @@ export async function GET(req: NextRequest) {
       `),
       pool.query(`
         SELECT product_id, product_name, COUNT(*) as count
-        FROM pre_orders
+        FROM orders
         GROUP BY product_id, product_name ORDER BY count DESC LIMIT 10
       `),
-      pool.query(`SELECT status, COUNT(*) as count FROM pre_orders GROUP BY status`),
+      pool.query(`SELECT status, COUNT(*) as count FROM orders GROUP BY status`),
       pool.query(`
         SELECT
           DATE(created_at) as date,
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
       `),
       pool.query(`
         SELECT o.*, p.name as p_name, p.type as p_type, p.image as p_image
-        FROM pre_orders o
+        FROM orders o
         LEFT JOIN products p ON p.id = o.product_id
         ORDER BY o.created_at DESC LIMIT 5
       `),
