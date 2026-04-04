@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     // Use parameterized query with pg pool
     await client.query(`
-      INSERT INTO pre_orders
+      INSERT INTO orders
         (id, product_id, product_name, full_name, email, phone, address, city, pincode,
          token_amount, token_paid, status, created_at, updated_at)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       now
     ]);
 
-    const order = await client.query("SELECT * FROM pre_orders WHERE id = $1", [id]);
+    const order = await client.query("SELECT * FROM orders WHERE id = $1", [id]);
     const orderResult = order.rows[0];
     
     return NextResponse.json(normalizeOrder(orderResult), { status: 201 });

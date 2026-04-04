@@ -4,7 +4,7 @@ import { pool } from "@/lib/db";
 export async function GET(_req: NextRequest, { params }: any) {
   const { rows } = await pool.query(
     `SELECT o.*, p.name as p_name, p.type as p_type, p.image as p_image
-     FROM pre_orders o LEFT JOIN products p ON p.id = o.product_id
+     FROM orders o LEFT JOIN products p ON p.id = o.product_id
      WHERE o.id = $1`,
     [params.id]
   );
@@ -41,7 +41,7 @@ export async function PATCH(req: NextRequest, { params }: any) {
 
     vals.push(params.id);
     const { rows } = await pool.query(
-      `UPDATE pre_orders SET ${sets.join(", ")} WHERE id = $${i} RETURNING *`,
+      `UPDATE orders SET ${sets.join(", ")} WHERE id = $${i} RETURNING *`,
       vals
     );
     return NextResponse.json(rows[0]);
