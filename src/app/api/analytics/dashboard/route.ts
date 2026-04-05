@@ -10,6 +10,7 @@ export async function GET(req: NextRequest) {
     const [
       pvRes, clRes, inRes, coRes,
       revRes, paidRes, totalRes,
+      cogsRes,
       compRes, topProdRes, statusRes,
       trendRes, recentRes,
     ] = await Promise.all([
@@ -20,6 +21,12 @@ export async function GET(req: NextRequest) {
       pool.query(`SELECT COALESCE(SUM(token_amount), 0) as total FROM orders WHERE token_paid = true`),
       pool.query(`SELECT COUNT(*) FROM orders WHERE token_paid = true`),
       pool.query(`SELECT COUNT(*) FROM orders`),
+      pool.query(`
+        SELECT COALESCE(SUM(p.cost_price), 0) as total_cogs 
+        FROM orders o 
+        JOIN products p ON o.product_id = p.id 
+        WHERE o.token_paid = true
+      `),
       pool.query(`
         SELECT component_id, COUNT(*) as count
         FROM analytics_events
@@ -55,6 +62,14 @@ export async function GET(req: NextRequest) {
     const ti = parseInt(inRes.rows[0].count);
     const tconv = parseInt(coRes.rows[0].count);
 
+    const totalRevenue = parseFloat(revRes.rows[0].total) || 0;
+    const paidOrders = parseInt(paidRes.rows[0].count) || 0;
+    const totalCogs = parseFloat(cogsRes.rows[0].total_cogs) || 0;
+    
+    // Shark tank metrics
+    const grossMargin = totalRevenue > 0 ? (((totalRevenue - totalCogs) / totalRevenue) * 100).toFixed(1) + "%" : "0%";
+    const aov = paidOrders > 0 ? "₹" + Math.round(totalRevenue / paidOrders).toLocaleString("en-IN") : "₹0";
+
     return NextResponse.json({
       overview: {
         totalPageViews: tv,
@@ -63,9 +78,11 @@ export async function GET(req: NextRequest) {
         totalConversions: tconv,
         conversionRate: tv > 0 ? ((tconv / tv) * 100).toFixed(1) + "%" : "0%",
         clickToIntentRate: tc > 0 ? ((ti / tc) * 100).toFixed(1) + "%" : "0%",
-        totalRevenue: parseFloat(revRes.rows[0].total),
-        paidOrders: parseInt(paidRes.rows[0].count),
+        totalRevenue,
+        paidOrders,
         totalOrders: parseInt(totalRes.rows[0].count),
+        grossMargin,
+        aov,
       },
       clicksByComponent: compRes.rows.map((r: any) => ({
         componentId: r.component_id,
