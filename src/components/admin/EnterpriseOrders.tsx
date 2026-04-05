@@ -66,33 +66,33 @@ export function EnterpriseOrders() {
   const totalPages = Math.ceil(total / 20);
 
   return (
-    <div className="space-y-6 animate-in fade-in zoom-in-95 duration-300">
+    <div className="space-y-4 lg:space-y-6 animate-in fade-in zoom-in-95 duration-300">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 lg:gap-4">
         <div>
-          <h2 className="text-xl text-white font-semibold">Orders Management</h2>
-          <p className="text-sm text-white/40">{total} total orders</p>
+          <h2 className="text-lg lg:text-xl text-white font-semibold">Orders Management</h2>
+          <p className="text-xs lg:text-sm text-white/40">{total} total orders</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 lg:gap-3">
           <div className="relative">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
             <input 
               type="text" 
-              placeholder="Search orders..." 
+              placeholder="Search..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && fetchOrders()}
-              className="bg-[#1a1a1a] border border-white/10 rounded-xl pl-9 pr-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#cfa15f]/50 w-48"
+              className="bg-[#1a1a1a] border border-white/10 rounded-lg lg:rounded-xl pl-8 lg:pl-9 pr-3 lg:pr-4 py-2 text-xs lg:text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#cfa15f]/50 w-32 lg:w-48"
             />
           </div>
           
-          <div className="flex items-center gap-1 bg-[#1a1a1a] rounded-xl p-1 border border-white/10">
+          <div className="flex items-center gap-1 bg-[#1a1a1a] rounded-lg lg:rounded-xl p-1 border border-white/10 overflow-x-auto max-w-full">
             {["ALL", "PENDING", "CONFIRMED", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"].map(s => (
               <button
                 key={s}
                 onClick={() => { setStatus(s); setPage(1); }}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
+                className={`px-2 lg:px-3 py-1 text-[10px] lg:text-xs font-semibold rounded-md lg:rounded-lg transition-colors whitespace-nowrap ${
                   status === s ? "bg-[#cfa15f] text-white" : "text-white/40 hover:text-white"
                 }`}
               >
@@ -101,7 +101,7 @@ export function EnterpriseOrders() {
             ))}
           </div>
           
-          <button onClick={fetchOrders} className="bg-[#1a1a1a] border border-white/10 rounded-xl p-2 hover:border-[#cfa15f]/40">
+          <button onClick={fetchOrders} className="bg-[#1a1a1a] border border-white/10 rounded-lg lg:rounded-xl p-2 hover:border-[#cfa15f]/40">
             <RefreshCw size={14} className="text-[#cfa15f]" />
           </button>
         </div>
@@ -240,6 +240,11 @@ function OrderDetailModal({ order, onClose, onUpdateStatus, onRefresh }: {
   const [partner, setPartner] = useState(order.shippingPartner || "");
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   async function handleSave() {
     setSaving(true);
     await fetch(`/api/orders/enterprise/${order.id}`, {
@@ -258,9 +263,9 @@ function OrderDetailModal({ order, onClose, onUpdateStatus, onRefresh }: {
   const inputCls = "w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#cfa15f]/50";
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-[#0d0d0d] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-[#0d0d0d] border-b border-white/10 p-6 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="bg-[#0d0d0d] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="flex-shrink-0 bg-[#0d0d0d] border-b border-white/10 p-6 flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               Order <span className="text-[#cfa15f] font-mono">{order.orderNumber}</span>
@@ -269,8 +274,8 @@ function OrderDetailModal({ order, onClose, onUpdateStatus, onRefresh }: {
           </div>
           <button onClick={onClose} className="text-white/40 hover:text-white p-2"><X size={20} /></button>
         </div>
-
-        <div className="p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-6 space-y-6">
           {/* Customer Info */}
           <div className="bg-[#1a1a1a] rounded-xl p-4 border border-white/5">
             <h3 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-3">Customer</h3>
@@ -366,8 +371,9 @@ function OrderDetailModal({ order, onClose, onUpdateStatus, onRefresh }: {
             </div>
           )}
         </div>
+        </div>
 
-        <div className="sticky bottom-0 bg-[#0d0d0d] border-t border-white/10 p-6 flex gap-3">
+        <div className="sticky bottom-0 bg-[#0d0d0d] border-t border-white/10 p-6 flex gap-3 flex-shrink-0">
           <button onClick={onClose} className="flex-1 border border-white/10 text-white/60 py-3 rounded-full text-sm hover:bg-white/5">Cancel</button>
           <button onClick={handleSave} disabled={saving} className="flex-1 bg-gradient-to-r from-[#b3742b] to-[#cfa15f] text-white py-3 rounded-full text-sm font-bold shadow-lg shadow-[#cfa15f]/20 disabled:opacity-50">
             {saving ? "Saving…" : "Save Changes"}

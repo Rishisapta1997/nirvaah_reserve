@@ -245,6 +245,11 @@ function ProductModal({ product, categories, onClose, onSave }: {
   });
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);

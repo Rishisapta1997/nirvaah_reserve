@@ -14,6 +14,8 @@ interface Product {
   price: string;
   image?: string;
   booking_price?: number;
+  basePrice?: string;
+  old_price?: string;
 }
 
 const inputCls =
@@ -87,6 +89,7 @@ export default function Reserve() {
           phone: `+91${form.phone}`,
           productId: selectedProduct,
           productName: product.name,
+          productPrice: String(product.price || product.booking_price || product.basePrice || '0'),
         }),
       });
 

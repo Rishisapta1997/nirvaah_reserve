@@ -195,6 +195,11 @@ function CustomerModal({ customer, onClose }: { customer: any; onClose: () => vo
   const [orders, setOrders] = useState<any[]>([]);
   
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  useEffect(() => {
     async function fetchOrders() {
       const res = await fetch(`/api/orders/enterprise?search=${customer.email}`);
       if (res.ok) {
