@@ -116,7 +116,7 @@ export default function Hero() {
               <Link
                 href="#reserve"
                 onClick={handleScroll}
-                className="border border-[#b7884d]/60 rounded-[30px] px-6 sm:px-8 py-2 sm:py-2.5 text-[#e2ba86] text-[12px] sm:text-[13px] tracking-widest hover:bg-[#b7884d]/20 transition-all duration-300"
+                className="bg-[#b7884d] border border-[#b7884d] rounded-[30px] px-6 sm:px-8 py-2 sm:py-2.5 text-white text-[12px] sm:text-[13px] tracking-widest hover:bg-[#cfa15f] hover:border-[#cfa15f] transition-all duration-300"
               >
                 Reserve
               </Link>

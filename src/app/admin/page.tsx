@@ -1,15 +1,18 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { LogOut, BarChart2, DollarSign, Globe, Package, ShoppingBag, Users, Truck, Settings, TrendingUp, Warehouse, Target, PieChart, Activity, Zap, Crown, Search, Filter } from "lucide-react";
+import { LogOut, BarChart2, DollarSign, Globe, Package, ShoppingBag, Users, Truck, Settings, TrendingUp, Warehouse, Target, PieChart, Activity, Zap, Crown, Search, Filter, Sparkles, Bell, Mail } from "lucide-react";
 
 import { EnterpriseDashboard } from "@/components/admin/EnterpriseDashboard";
 import { EnterpriseOrders } from "@/components/admin/EnterpriseOrders";
 import { EnterpriseProducts } from "@/components/admin/EnterpriseProducts";
 import { EnterpriseCustomers } from "@/components/admin/EnterpriseCustomers";
 import { EnterpriseInventory } from "@/components/admin/EnterpriseInventory";
+import AIInsightsTab from "@/components/admin/AIInsightsTab";
+import AlertsTab from "@/components/admin/AlertsTab";
+import ReportsTab from "@/components/admin/ReportsTab";
 
-type TabType = "dashboard" | "analytics" | "trends" | "marketing" | "orders" | "products" | "customers" | "inventory" | "investor" | "settings";
+type TabType = "dashboard" | "analytics" | "trends" | "marketing" | "investor" | "insights" | "alerts" | "reports" | "orders" | "products" | "customers" | "inventory" | "settings";
 
 export default function EnterpriseAdminPage() {
   const [authed, setAuthed] = useState(false);
@@ -19,7 +22,7 @@ export default function EnterpriseAdminPage() {
   
   const [activeTab, setActiveTab] = useState<TabType>("dashboard");
   const [analyticsRange, setAnalyticsRange] = useState("30");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -36,12 +39,12 @@ export default function EnterpriseAdminPage() {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4">
         <div className="w-full max-w-sm">
-          <div className="text-center mb-8">
-            <div className="text-3xl font-bold text-white tracking-[0.15em] mb-1">NIRVAAH</div>
+          <div className="text-center mb-6 lg:mb-8">
+            <div className="text-2xl lg:text-3xl font-bold text-white tracking-[0.15em] mb-1">NIRVAAH</div>
             <div className="text-[10px] text-[#cfa15f] tracking-widest uppercase mb-1">Enterprise Admin</div>
             <div className="text-[10px] text-white/40 tracking-widest uppercase">Executive Access Required</div>
           </div>
-          <form onSubmit={handleLogin} className="bg-[#111] border border-white/8 shadow-2xl rounded-2xl p-6 space-y-4">
+          <form onSubmit={handleLogin} className="bg-[#111] border border-white/8 shadow-2xl rounded-2xl p-5 lg:p-6 space-y-4">
             <div>
               <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} required
                 className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#cfa15f]/60" placeholder="admin@nirvaah.com" />
@@ -64,6 +67,9 @@ export default function EnterpriseAdminPage() {
     { id: "trends", label: "Market Trends", icon: Globe },
     { id: "marketing", label: "Marketing AI", icon: Target },
     { id: "investor", label: "Investor Suite", icon: Crown },
+    { id: "insights", label: "AI Insights", icon: Sparkles },
+    { id: "alerts", label: "Alerts", icon: Bell },
+    { id: "reports", label: "Reports", icon: Mail },
     { id: "orders", label: "Orders", icon: ShoppingBag },
     { id: "products", label: "Products", icon: Package },
     { id: "customers", label: "Customers", icon: Users },
@@ -73,38 +79,46 @@ export default function EnterpriseAdminPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white flex">
-      {/* Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-64' : 'w-20'} border-r border-white/8 bg-[#0d0d0d] flex flex-col transition-all duration-300 fixed lg:relative z-40 h-screen overflow-y-auto`}>
-        <div className="p-6 border-b border-white/8">
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/60 z-30 lg:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+      
+      {/* Sidebar - always visible on lg, toggle on mobile */}
+      <aside className={`
+        fixed lg:relative z-40 h-screen bg-[#0d0d0d] border-r border-white/8 flex flex-col
+        transition-transform duration-300 ease-in-out
+        w-64
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        <div className="p-4 lg:p-6 border-b border-white/8">
           <div className="flex items-center justify-between">
-            {sidebarOpen && (
-              <span className="text-lg font-black tracking-[0.15em] text-white">NIRVAAH<span className="text-[#cfa15f]">.ENT</span></span>
-            )}
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/5 rounded-lg">
-              {sidebarOpen ? <Settings size={18} /> : <BarChart2 size={18} />}
+            <span className="text-lg font-black tracking-[0.15em] text-white">NIRVAAH<span className="text-[#cfa15f]">.ENT</span></span>
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/5 rounded-lg lg:hidden">
+              <Settings size={18} />
             </button>
           </div>
         </div>
         
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-2 lg:p-4 space-y-1 overflow-y-auto">
           {tabs.map(t => (
-            <button key={t.id} onClick={() => setActiveTab(t.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+            <button key={t.id} onClick={() => { setActiveTab(t.id); setSidebarOpen(false); }}
+              className={`w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-xs lg:text-sm font-medium transition-all ${
                 activeTab === t.id 
                   ? "bg-[#cfa15f] text-black shadow-lg shadow-[#cfa15f]/20" 
                   : "text-white/40 hover:text-white hover:bg-white/5"
               }`}>
               <t.icon size={18} className={activeTab === t.id ? "text-black" : "text-[#cfa15f]"} />
-              {sidebarOpen && <span>{t.label}</span>}
+              <span>{t.label}</span>
             </button>
           ))}
         </nav>
         
-        <div className="p-4 border-t border-white/8">
+        <div className="p-2 lg:p-4 border-t border-white/8">
           <button onClick={() => { fetch("/api/admin/logout", { method:"POST" }); setAuthed(false); }} 
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all">
+            className="w-full flex items-center gap-3 px-3 lg:px-4 py-2.5 lg:py-3 rounded-xl text-xs lg:text-sm font-medium text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-all">
             <LogOut size={18} />
-            {sidebarOpen && <span>Logout</span>}
+            <span>Logout</span>
           </button>
         </div>
       </aside>
@@ -112,42 +126,45 @@ export default function EnterpriseAdminPage() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         {/* Header */}
-        <header className="border-b border-white/8 px-6 py-4 flex items-center justify-between sticky top-0 z-30 bg-[#0a0a0a]/90 backdrop-blur-md">
-          <div className="flex items-center gap-4">
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/5 rounded-lg lg:hidden">
+        <header className="border-b border-white/8 px-3 lg:px-6 py-3 lg:py-4 flex items-center justify-between sticky top-0 z-20 bg-[#0a0a0a]/90 backdrop-blur-md">
+          <div className="flex items-center gap-2 lg:gap-4">
+            <button onClick={() => setSidebarOpen(true)} className="p-2 hover:bg-white/5 rounded-lg lg:hidden">
               <BarChart2 size={20} />
             </button>
-            <h1 className="text-xl font-semibold text-white">{tabs.find(t => t.id === activeTab)?.label}</h1>
+            <h1 className="text-base lg:text-xl font-semibold text-white">{tabs.find(t => t.id === activeTab)?.label}</h1>
           </div>
           
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-3 lg:gap-5">
             <select value={analyticsRange} onChange={e => setAnalyticsRange(e.target.value)}
-               className="bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider text-white focus:outline-none focus:border-[#cfa15f]/50 cursor-pointer">
-              <option value="1">Last 24h</option>
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-              <option value="90">Last Quarter</option>
-              <option value="365">Last Year</option>
+               className="bg-[#1a1a1a] border border-white/10 rounded-lg lg:rounded-xl px-2 lg:px-4 py-1.5 lg:py-2 text-xs font-bold uppercase tracking-wider text-white focus:outline-none focus:border-[#cfa15f]/50 cursor-pointer">
+              <option value="1">24h</option>
+              <option value="7">7d</option>
+              <option value="30">30d</option>
+              <option value="90">90d</option>
+              <option value="365">1y</option>
             </select>
           </div>
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 p-4 md:p-8 max-w-[1800px] mx-auto w-full">
+        <div className="flex-1 p-3 lg:p-8 max-w-[1800px] mx-auto w-full">
           {activeTab === "dashboard" && <EnterpriseDashboard range={analyticsRange} />}
           {activeTab === "analytics" && <AdvancedAnalytics range={analyticsRange} />}
           {activeTab === "trends" && <MarketTrends range={analyticsRange} />}
           {activeTab === "marketing" && <MarketingSuite range={analyticsRange} />}
           {activeTab === "investor" && <InvestorSuite range={analyticsRange} />}
+          {activeTab === "insights" && <AIInsightsTab />}
+          {activeTab === "alerts" && <AlertsTab />}
+          {activeTab === "reports" && <ReportsTab />}
           {activeTab === "orders" && <EnterpriseOrders />}
           {activeTab === "products" && <EnterpriseProducts />}
           {activeTab === "customers" && <EnterpriseCustomers />}
           {activeTab === "inventory" && <EnterpriseInventory />}
           {activeTab === "settings" && (
-            <div className="bg-[#111] border border-white/8 rounded-2xl p-8 text-center">
-              <Settings size={48} className="text-white/20 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-white mb-2">Settings</h2>
-              <p className="text-white/40">Configure your enterprise settings here</p>
+            <div className="bg-[#111] border border-white/8 rounded-2xl p-6 lg:p-8 text-center">
+              <Settings size={36} className="text-white/20 mx-auto mb-4 lg:mb-4" />
+              <h2 className="text-lg lg:text-xl font-semibold text-white mb-2">Settings</h2>
+              <p className="text-white/40 text-sm">Configure your enterprise settings here</p>
             </div>
           )}
         </div>

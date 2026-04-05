@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Filter, RefreshCw, Truck, X } from "lucide-react";
 
 interface Order {
@@ -31,6 +31,11 @@ function OrderModal({ order, onClose, onUpdate }: { order: Order; onClose: () =>
   const [partner, setPartner] = useState(order.shippingPartner || "");
   const [tokenPaid, setTokenPaid] = useState(order.tokenPaid);
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
 
   async function handleUpdate() {
     setSaving(true);

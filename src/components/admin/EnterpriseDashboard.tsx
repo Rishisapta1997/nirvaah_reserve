@@ -76,11 +76,11 @@ export function EnterpriseDashboard({ range }: { range: string }) {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
         {[...Array(8)].map((_, i) => (
-          <div key={i} className="bg-[#111] rounded-2xl p-5 animate-pulse">
-            <div className="h-10 bg-white/5 rounded-lg mb-3" />
-            <div className="h-6 bg-white/5 rounded w-2/3" />
+          <div key={i} className="bg-[#111] rounded-xl lg:rounded-2xl p-4 lg:p-5 animate-pulse">
+            <div className="h-8 lg:h-10 bg-white/5 rounded-lg mb-2 lg:mb-3" />
+            <div className="h-5 lg:h-6 bg-white/5 rounded w-2/3" />
           </div>
         ))}
       </div>
@@ -92,10 +92,10 @@ export function EnterpriseDashboard({ range }: { range: string }) {
   const { revenue, customers, topProducts, categories, dailyTrend, funnel, returns, reviews } = data;
 
   return (
-    <div className="space-y-6 animate-in fade-in zoom-in-95 duration-300">
+    <div className="space-y-4 lg:space-y-6 animate-in fade-in zoom-in-95 duration-300">
       {/* Revenue & Orders */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard icon={DollarSign} label="Total Revenue" value={formatCurrency(revenue.total)} trend={12.5} subValue="Last {range} days" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+        <StatCard icon={DollarSign} label="Total Revenue" value={formatCurrency(revenue.total)} trend={12.5} subValue={`Last ${range} days`} />
         <StatCard icon={ShoppingCart} label="Total Orders" value={formatNumber(revenue.orders)} trend={8.2} />
         <StatCard icon={Users} label="Customers" value={formatNumber(customers.total)} trend={15.3} />
         <StatCard icon={Package} label="Avg Order Value" value={formatCurrency(revenue.orders > 0 ? revenue.total / revenue.orders : 0)} />
