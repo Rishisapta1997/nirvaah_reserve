@@ -53,24 +53,24 @@ export default function Craft() {
           className="w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] bg-[#3a2d24] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg mb-10 md:mb-12 relative flex items-center justify-center"
         >
           <motion.div
-            style={{ y: backgroundY, backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/v1774604158/file_00000000bea07206999095920bb5667c_fr9zyl.png')"}}
+            style={{ y: backgroundY, backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/q_auto,f_auto/v1774604158/file_00000000bea07206999095920bb5667c_fr9zyl.png')"}}
             className="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-overlay scale-110"
           />
           <div className="z-10 text-center text-white/80 p-3 sm:p-6">
             <h3 className="text-lg sm:text-2xl font-serif tracking-widest uppercase mb-4 sm:mb-8 border-b border-white/20 pb-2 sm:pb-4 inline-block px-4 sm:px-12">Premium Details</h3>
             <div className="flex gap-3 sm:gap-6 md:gap-12 text-[9px] sm:text-[11px] font-medium tracking-widest uppercase justify-center">
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-lg sm:rounded-xl mb-2 sm:mb-3 border border-white/20 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/v1774606975/texture_jute_hhhs7j.png')" }} />
+                <div className="w-10 h-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-lg sm:rounded-xl mb-2 sm:mb-3 border border-white/20 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/q_auto,f_auto/v1774606975/texture_jute_hhhs7j.png')" }} />
                 <span className="hidden sm:block">Textured Jute</span>
                 <span className="sm:hidden">Jute</span>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-lg sm:rounded-xl mb-2 sm:mb-3 border border-white/20 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/v1774606974/smooth_leather_eccnki.png')" }} />
+                <div className="w-10 h-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-lg sm:rounded-xl mb-2 sm:mb-3 border border-white/20 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/q_auto,f_auto/v1774606974/smooth_leather_eccnki.png')" }} />
                 <span className="hidden sm:block">Smooth Leather</span>
                 <span className="sm:hidden">Leather</span>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-lg sm:rounded-xl mb-2 sm:mb-3 border border-white/20 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/v1774606975/brass_hardware_qxfznr.png')" }} />
+                <div className="w-10 h-10 sm:w-14 md:w-16 h-10 sm:h-14 md:h-16 rounded-lg sm:rounded-xl mb-2 sm:mb-3 border border-white/20 overflow-hidden bg-cover bg-center" style={{ backgroundImage: "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/q_auto,f_auto/v1774606975/brass_hardware_qxfznr.png')" }} />
                 <span className="hidden sm:block">Brass Hardware</span>
                 <span className="sm:hidden">Brass</span>
               </div>
