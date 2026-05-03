@@ -63,7 +63,7 @@ export default function Hero() {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/v1774448835/ChatGPT_Image_Mar_25_2026_07_56_47_PM_gimiz0.png')",
+              "url('https://res.cloudinary.com/dvy6lnr3j/image/upload/q_auto,f_auto/v1774448835/ChatGPT_Image_Mar_25_2026_07_56_47_PM_gimiz0.png')",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/60" />
